@@ -4,6 +4,7 @@
 - `python=3.7`
 - `pandas`
 - `numpy`
+- `scipy`
 - `matplotlib`
 - `xgboost==1.2.1`
 - `shap==0.37.0`
