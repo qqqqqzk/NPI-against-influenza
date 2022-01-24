@@ -1,7 +1,7 @@
 # The effectiveness of governmental nonpharmaceutical interventions against COVID-19 on the control of seasonal influenza transmission: an ecological study
 
 ## Dependency
-- `python=3.7`
+- `python=3.8.5`
 - `pandas`
 - `numpy`
 - `scipy`
