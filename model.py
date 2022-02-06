@@ -28,7 +28,7 @@ X.columns = ['School closure', 'Workplace closure', 'Public events cancellation'
 'Unemployment subsidy', 'Debt/contract relief', 'Health education promotion', 
 'Testing policy', 'Contact tracing', 'Mask wearing requirement']
 
-xgb = XGBRegressor(reg_alpha=0.0001004896123179, colsample_bytree=1, gamma=0.29999999999999993, reg_lambda=0.99144791324819, 
+xgb = XGBRegressor(reg_alpha=0.0001, colsample_bytree=1, gamma=0.29999999999999993, reg_lambda=0.991, 
                    learning_rate=0.3027546451247583, max_depth=6, min_child_weight=1, n_estimators=114, subsample=0.9998110744189, n_jobs=24, random_state=1)
 print(cross_val_score(xgb, X, y, cv=kf, n_jobs=24, scoring='neg_mean_squared_error').mean())
 xgb.fit(X,y)
