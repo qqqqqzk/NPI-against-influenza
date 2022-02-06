@@ -28,6 +28,7 @@ X.columns = ['School closure', 'Workplace closure', 'Public events cancellation'
 'Unemployment subsidy', 'Debt/contract relief', 'Health education promotion', 
 'Testing policy', 'Contact tracing', 'Mask wearing requirement']
 
+# XGBoost
 xgb = XGBRegressor(reg_alpha=0.0001, colsample_bytree=1, gamma=0.29999999999999993, reg_lambda=0.991, 
                    learning_rate=0.3027546451247583, max_depth=6, min_child_weight=1, n_estimators=114, subsample=0.9998110744189, n_jobs=24, random_state=1)
 print(cross_val_score(xgb, X, y, cv=kf, n_jobs=24, scoring='neg_mean_squared_error').mean())
@@ -41,13 +42,14 @@ model = LassoCV(cv=10).fit(X, y)
 importance = np.abs(model.coef_)
 print([X.columns[idx] for idx, val in enumerate(importance) if val > 0])
 
+# Support vector machine
 svr = SVR()
 sfs = SequentialFeatureSelector(svr)
 sfs.fit(X, y)
 print("Features selected by forward sequential selection: "
       f"{X.columns[sfs.get_support()].tolist()}")
 
-
+# Random forest
 rf = RandomForestRegressor()
 sfs = SequentialFeatureSelector(rf)
 sfs.fit(X, y)
@@ -55,8 +57,7 @@ print(r2_score(y, rf.predict(X)))
 print("Features selected by forward sequential selection: "
       f"{X.columns[sfs.get_support()].tolist()}")
 
-
-rf = RandomForestRegressor(n_estimators=415, max_depth=8, max_features=7, n_jobs=12) # 参数不多，可以用网格
+rf = RandomForestRegressor(n_estimators=415, max_depth=8, max_features=7, n_jobs=12)
 rf.fit(X,y)
 explainer = shap.TreeExplainer(rf)
 shap.summary_plot(explainer.shap_values(X), X, max_display=10)
@@ -105,7 +106,7 @@ X = f[['Lag_5_C1_School closing', 'Lag_3_C2_Workplace closing', 'Lag_4_C3_Cancel
        'E2_Debt/contract relief', 'Lag_7_H1_Public information campaigns',
        'H2_Testing policy', 'Lag_4_H3_Contact tracing', 'H6_Facial Coverings']]
 y = f[['dif']]
-%%time
+
 xgb = XGBRegressor(reg_alpha=0, colsample_bytree=0.84, gamma=0.1175, reg_lambda=0.8, 
                    learning_rate=0.1, max_depth=10, min_child_weight=1, n_estimators=100, subsample=1, n_jobs=24, random_state=1)
 print(cross_val_score(xgb, X, y, cv=kf, n_jobs=24, scoring='neg_mean_squared_error').mean())
